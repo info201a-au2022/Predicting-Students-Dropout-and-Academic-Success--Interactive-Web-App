@@ -1,38 +1,67 @@
 library(shiny)
-read_delim("dataset.csv")
+library(ggplot2)
+library(dplyr)
+
+data <- read.delim("data/dataset.csv")
+getwd()
 
 ui <- fluidPage(
-    titlePanel("Old Faithful Geyser Data"),
-
-    # Sidebar with a slider input for number of bins 
-    sidebarLayout(
-        sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
-        ),
-
-        # Show a plot of the generated distribution
-        mainPanel(
-           plotOutput("distPlot")
-        )
+  titlePanel("Predicting Students' Dropout and Academic Success"),
+  
+  # Main panel with tabs
+  mainPanel(
+    tabsetPanel(
+      
+      # Opening page with explanatory text
+      tabPanel("Project Overview", 
+               
+      ),
+      
+      # Plot page
+      tabPanel("Factors Affecting Undergraduate Success",
+               sidebarLayout(
+                 sidebarPanel(
+                   
+                 ),
+                 mainPanel(
+                   
+                 )
+               )
+      ),
+      
+      tabPanel("Grade Changes Over Time", 
+               sidebarLayout(
+                 sidebarPanel(
+                   
+                 ),
+                 mainPanel(
+                   
+                  
+                 )
+               )
+      ),
+      
+      tabPanel("Economic Factors and Education", 
+               sidebarLayout(
+                 sidebarPanel(
+                   
+                 ),
+                 mainPanel(
+                   
+                   
+                 )
+               )
+      ),
+      
+      tabPanel("Conclusion", 
+               
+      ),
     )
+  )
 )
 
+
 server <- function(input, output) {
-
-    output$distPlot <- renderPlot({
-        # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white',
-             xlab = 'Waiting time to next eruption (in mins)',
-             main = 'Histogram of waiting times')
-    })
 }
 
 shinyApp(ui = ui, server = server)
