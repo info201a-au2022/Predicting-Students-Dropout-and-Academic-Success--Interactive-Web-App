@@ -17,7 +17,7 @@ ui <- fluidPage(
                tags$p("Created by Akhil Damidi, Luke Jin, Bill Yuliang, and Jack Villigrand"),
                fluidRow(
                  column(width = 6, 
-                        tags$img(src = "https://storage.googleapis.com/kaggle-datasets-images/2780494/4802354/2b7db8e162649e95f56d8a3e8bb05395/dataset-cover.png?t=2023-01-03-09-19-56", width = "215%")),
+                        tags$img(src = "https://storage.googleapis.com/kaggle-datasets-images/2780494/4802354/2b7db8e162649e95f56d8a3e8bb05395/dataset-cover.png?t=2023-01-03-09-19-56", width = "220%")),
                  
                ),
                tags$h1("Project Overview", style = "font-size: 2em; margin-top: 20px;"),
