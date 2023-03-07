@@ -84,8 +84,11 @@ ui <- fluidPage(
                 as the correlations are all close to 0.")
       ),
       
-      tabPanel("Conclusion", 
-               
+      tabPanel("Conclusion",
+               tags$h1("Takeaways", style = "font-size: 2em; margin-top: 20px;"),
+               tags$h1("Our Data Quality", style = "font-size: 2em; margin-top: 20px;"),
+               tags$h1("Limitations", style = "font-size: 2em; margin-top: 20px;"),
+               tags$h1("Future Ideas", style = "font-size: 2em; margin-top: 20px;"),
       ),
     )
   )
