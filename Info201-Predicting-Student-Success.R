@@ -19,7 +19,7 @@ ui <- fluidPage(
                tags$p("Created by Akhil Damidi, Luke Jin, Bill Yuliang, and Jack Villagrand"),
                fluidRow(
                  column(width = 6, 
-                        tags$img(src = "https://storage.googleapis.com/kaggle-datasets-images/2780494/4802354/2b7db8e162649e95f56d8a3e8bb05395/dataset-cover.png?t=2023-01-03-09-19-56", width = "220%")),
+                        tags$img(src = "https://storage.googleapis.com/kaggle-datasets-images/2780494/4802354/2b7db8e162649e95f56d8a3e8bb05395/dataset-cover.png?t=2023-01-03-09-19-56", width = "200%")),
                  
                ),
                tags$h1("Project Overview", style = "font-size: 2em; margin-top: 20px;"),
@@ -51,6 +51,7 @@ ui <- fluidPage(
                )
       ),
       
+      # Grade change over time page
       tabPanel("Grade Changes Over Time", 
                sidebarLayout(
                  sidebarPanel(
@@ -62,7 +63,7 @@ ui <- fluidPage(
                  )
                )
       ),
-      
+      # Economic Factors and Education Page
       tabPanel("Economic Factors and Education", 
                h1("Do economic factors, such as unemployment, inflation, and GDP, of where students live in, affect their dropout, enrollment or graduation?"),
                sidebarLayout(
@@ -83,7 +84,7 @@ ui <- fluidPage(
                h2("Therefore, unemployment rate, inflation rate and GDP have no clear relationship to the academic success of students,
                 as the correlations are all close to 0.")
       ),
-      
+      #Conclusion Page
       tabPanel("Conclusion",
                tags$h1("Takeaways", style = "font-size: 2em; margin-top: 20px;"),
                tags$h1("Our Data Quality", style = "font-size: 2em; margin-top: 20px;"),
