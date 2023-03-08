@@ -1,19 +1,14 @@
 # Final Project Repository
-**INFO-201: _Foundational Skills For Data Science_ (Autumn 2022)**
+**INFO-201: _Intro to Data Programming_ (Winter 2023)**
 
-*P01: Project Proposal*: [Project Proposal Title - Edit Me!](./docs/p01-proposal.md) 
+This app aims to determine the potential relationship between social and economic factors and students' academic success.
+The dataset is pulled from Kaggle.com, titled "Predict students' dropout and academic success". Main variables used are
+age of students, curriculum grades, father's occupation, nationality, unemployment rate, GDP, inflation rate and status of
+students enrollment. Two scatter plots and one table facilitate to display the relationship between variables. All files
+can be found under the github repository, and shiny app acts as an online platform to exhibit our codes into a real app to
+the public.
+
+Link to shiny app: https://adamidi.shinyapps.io/project-group-7-section-bc/?_ga=2.212803412.1752549669.1678273998-1705464148.1678088639 
+Link to github: https://github.com/info201a-au2022/project-group-7-section-bc.git
 
 
-|Project Directories | Brief Description|
-|---------------| -----------------|
-|[`/data`](./data) | All project datasets should be stored and documented here. For example, if you work with Common Separated Value (.cvs) datasets, they would stored here and documented in this directory's README.md file. Similarly, if you get data from web APIs, you would document the APIs in the directory's `README.md`.
-|[`/docs`](./docs) | All project reports and web documents will be published from this directory. This includes Markdown files (.md), R Markdown files (.Rmd),   HTML files (.html), and so on. The `./docs` directory is the root directory of the website for your project. It will also be used to store all of your design work and project documentation.|
-|[`/instructions`](./instructions)| This directory contains the project design brief.  |
-|[`/source`](./source) | All for your R source code will be located in this directory. To organize your code, you might also decide to create sub-directories.
-| .gitignore | This  file is important. It tells git to ignore all files that are listed therein. Ignoring "non-useful" files will make it *much* easier to work togther in your team. See Freeman and Ross (2019, section 3.6) for details.  |
-| LICENSE | This is a straigtforward software license that basically says "You own the copyright of your code.  Others can use your code, so long as they cite that they are doing so." You should put your names into the LICENSE file. If you would like to use a different license, that would be fine! |
-
-### Developer notes: 
-* You will use this repository for developing your Final Project 
-* You will customized and add to this basic directory structure over the course of your project - edit the above table has needed
-* When ready, delete these developer notes
