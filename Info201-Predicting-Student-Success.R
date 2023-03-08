@@ -62,16 +62,22 @@ ui <- fluidPage(
                )
       ),
       
-      tabPanel("Grade Changes Over Time", 
+      tabPanel("Grade Changes by Nationality", 
+               h1("Does Nationality influence the academic success?"),
+               p("0 = Domestic Students | 1 = International Students"),
                sidebarLayout(
                  sidebarPanel(
-                   
+                   selectInput(
+                     inputId = "International", label = "International or Not:",
+                     choices = c("0", "1"),
+                     selected = c("0", "1"),
+                   )
                  ),
                  mainPanel(
-                   
-                  
+                   dataTableOutput("chart"),
                  )
-               )
+               ),
+               h2("From this data, we can notice that domestic students have higher grade on both semester 1 and 2.")
       ),
       
       tabPanel("Economic Factors and Education", 
@@ -169,6 +175,20 @@ server <- function(input, output) {
   output$scatter_plot <- renderPlot({
     scatter_data()
   })
-}
 
+
+table_data <- reactive({
+  data %>%
+    filter(International == input$International) %>%
+    mutate(across(c(Curricular.units.1st.sem..grade., Curricular.units.2nd.sem..grade.), ~round(., digits = 2))) %>%
+    arrange(desc(Curricular.units.1st.sem..grade.), desc(Curricular.units.2nd.sem..grade.)) %>%
+    select(Curricular.units.1st.sem..grade., Curricular.units.2nd.sem..grade.)
+})
+
+output$chart <- renderDataTable({
+  table_data() %>%
+    setNames(c("First Semester Grade", "Second Semester Grade"))
+})
+
+}
 shinyApp(ui = ui, server = server)
