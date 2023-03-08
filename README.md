@@ -8,7 +8,8 @@ students enrollment. Two scatter plots and one table facilitate to display the r
 can be found under the github repository, and shiny app acts as an online platform to exhibit our codes into a real app to
 the public.
 
-Link to shiny app: https://adamidi.shinyapps.io/project-group-7-section-bc/?_ga=2.212803412.1752549669.1678273998-1705464148.1678088639 
+Link to shiny app: https://adamidi.shinyapps.io/project-group-7-section-bc/?_ga=2.212803412.1752549669.1678273998-1705464148.1678088639
+
 Link to github: https://github.com/info201a-au2022/project-group-7-section-bc.git
 
 
