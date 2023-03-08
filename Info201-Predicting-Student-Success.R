@@ -2,7 +2,7 @@ library(shiny)
 library(ggplot2)
 library(dplyr)
 
-data <- read.csv("data/dataset.csv")
+data <- read_delim("data/dataset.csv")
 getwd()
 data1 <- data.frame(data)
 names(data1) <- gsub("\\.", "_", names(data1))
@@ -40,13 +40,24 @@ ui <- fluidPage(
       ),
       
       # Plot page
-      tabPanel("Factors Affecting Academic Success",
+      tabPanel("Parental Influence on Academic Success",
                sidebarLayout(
                  sidebarPanel(
-                   
+                   renderText(output$plot_text),
+                   sliderInput("Student Age", "Age of student at time of enrollment",
+                               min = 17,
+                               max = 70,
+                               value = 20),
+                   radioButtons("color", "Choose color",
+                                choices = c("blue", "green", "orange", "purple", "yellow"))
                  ),
                  mainPanel(
-                   
+                   plotOutput("plot"),
+                   tags$h1("Summary of Findings From Graph"),
+                   tags$p("This graph illustrates that there is little effect on a student's grade based on their father's occupation, and that the age of a student does not impact the influence of a  father's occupation on a student."),
+                   tags$p("In this graph, you are able to adjust the age of the student using the widget on the left side of the app. The graph then displays the students' father's occupation, and the grades they recieved in their second semester."),
+                   tags$p("The graph depicts that a high occupation for one's father does not depict academic success. As seen through the data, there is a large cluster of data points near the top left of the graph, indicating that there is a large sum of students getting strong grades, while their father has a lower occupation."),
+                   tags$p("The graph demonstrates that regardless of the father's occupation, a student is able to succeed academically, and that overall a student whose father has a lower occupation will do fractionally better than a student whose father has a higher occupation")
                  )
                )
       ),
@@ -117,6 +128,33 @@ server <- function(input, output) {
     paste("The correlation between", input$xvar, "and", input$yvar, "is", round(corr, 2))
   })
   
+  #Plot for parental influence on academic success
+  output$plot <- renderPlot({
+    age_data <- data %>% 
+      filter(`Age at enrollment` <= input$`Student Age`) %>% 
+      ggplot(aes(`Father's occupation`, `Curricular units 2nd sem (grade)`)) +
+      geom_point(col=input$color) +
+      ggtitle("Relationship between Father's Occupation and Student's Grades")
+    age_data
+  })
+  
+  #Plot text for parental influence on academic success
+  output$plot_text <- renderText({
+    age_data <- data %>% 
+      filter(`Age at enrollment` <= input$`Student Age`) %>% 
+      ggplot(aes(`Age at enrollment`, `Curricular units 1st sem (grade)`)) +
+      geom_point(col=input$color) +
+      ggtitle(paste("The Age of Each Student, and the amount of student's which fit this age"))
+    
+    age_df <- ggplot_build(age_data)$data[[1]]
+    
+    n_total <- nrow(age_df)
+    n_missing <- sum(is.na(age_df$`Curricular units 1st sem (grade)`) | is.na(age_df$`Age at enrollment`))
+    n_non_missing <- n_total - n_missing
+    
+    paste("The amount of students who fit this age range: ", n_non_missing)
+  })
+  
   # Function to create scatter plot
   createScatterPlot <- function(xvar, yvar, data1) {
     ggplot(data1, aes_string(x = xvar, y = yvar, color = "Target")) + 
@@ -125,6 +163,7 @@ server <- function(input, output) {
       theme_bw() +
       theme(plot.title = element_text(hjust = 0.5, vjust = 1))
   }
+  
   
   # Scatter plot output
   scatter_data <- reactive({
