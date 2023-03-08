@@ -1,8 +1,10 @@
 library(shiny)
 library(ggplot2)
 library(dplyr)
+library(tidyverse)
 
-data <- read_delim("data/dataset.csv")
+data <- read_delim("dataset.csv")
+data2 <- read.csv("dataset.csv")
 getwd()
 data1 <- data.frame(data)
 names(data1) <- gsub("\\.", "_", names(data1))
@@ -176,9 +178,8 @@ server <- function(input, output) {
     scatter_data()
   })
 
-
 table_data <- reactive({
-  data %>%
+  data2 %>%
     filter(International == input$International) %>%
     mutate(across(c(Curricular.units.1st.sem..grade., Curricular.units.2nd.sem..grade.), ~round(., digits = 2))) %>%
     arrange(desc(Curricular.units.1st.sem..grade.), desc(Curricular.units.2nd.sem..grade.)) %>%
