@@ -88,8 +88,11 @@ ui <- fluidPage(
       tabPanel("Conclusion",
                tags$h1("Takeaways", style = "font-size: 2em; margin-top: 20px;"),
                tags$h1("Our Data Quality", style = "font-size: 2em; margin-top: 20px;"),
+               tags$p("The dataset on factors influencing student retention in higher education that we got from Kaggle has been reviewed, and it looks to be of strong quality. The dataset comprises 61 attributes and 1710 instances, which provides a large quantity of data to work with. The dataset also appears to be well-organized, with all the data required for analysis present. In addition, the data was collected by four seperate authors, reducing the bias of the dataset and improving its credibility."),
+               tags$p("Without performing a detailed analysis, it is difficult to determine the bias in the dataset. It is important to keep in mind that the dataset is restricted to higher education in the United States, which may limit the applicability of the findings to other nations. Moreover, factors/variables affecting student success that are included in the dataset are all categorical, described with the use of numbers, which is difficult to interpret and breakdown the meaning of."),
                tags$h1("Limitations", style = "font-size: 2em; margin-top: 20px;"),
                tags$h1("Future Ideas", style = "font-size: 2em; margin-top: 20px;"),
+               tags$p("With this project, we wanted to target stakeholders, such as academics, educators, managers, and policymakers in the area of higher education. We want to make it clear that certain social and economic factors improve academic success while other factors may decline academic success. With the takeaways from the this analysis, we want look at ways to improve student perfromance in various academic fields. By identifying the factors that improve academic success, in the future our users can work to enhance these factors in students to improve their academic success rate."),
       ),
     )
   )
