@@ -1,8 +1,10 @@
 library(shiny)
 library(ggplot2)
 library(dplyr)
+library(tidyverse)
 
 data <- read_delim("data/dataset.csv")
+data2 <- read.csv("data/dataset.csv")
 getwd()
 data1 <- data.frame(data)
 names(data1) <- gsub("\\.", "_", names(data1))
@@ -19,11 +21,11 @@ ui <- fluidPage(
                tags$p("Created by Akhil Damidi, Luke Jin, Bill Yuliang, and Jack Villagrand"),
                fluidRow(
                  column(width = 6, 
-                        tags$img(src = "https://storage.googleapis.com/kaggle-datasets-images/2780494/4802354/2b7db8e162649e95f56d8a3e8bb05395/dataset-cover.png?t=2023-01-03-09-19-56", width = "200%")),
+                        tags$img(src = "https://storage.googleapis.com/kaggle-datasets-images/2780494/4802354/2b7db8e162649e95f56d8a3e8bb05395/dataset-cover.png?t=2023-01-03-09-19-56", width = "220%")),
                  
                ),
                tags$h1("Project Overview", style = "font-size: 2em; margin-top: 20px;"),
-               tags$p("The report provides a thorough analysis of how social and economic factors affect kids' academic success. Determining the main elements that support student accomplishment is the main goal of this report, along with a study of the Predict Students' Dropout and Academic Success dataset. For academics, teachers, administrators, and policymakers working in the higher education field, this paper may be useful. This report may be particularly useful to people trying to understand the factors that promote student achievement and people trying to improve student performance across a variety of areas."),
+               tags$p("The report provides a thorough analysis of how social and economic factors affect kids' academic success. Determining the main elements that support student accomplishment is the main goal of this report, along with a study of the Predict Students' Dropout and Academic Success dataset. For academics, teachers, administrators, and policymakers working in the higher education field, this paper may be useful. This report may be particularly useful to people trying to understand the factors that promote student achievement and people trying to improve student performance across a variety of areas."),
                tags$p("Our goal has been to provide our users with easily understandable graphs that show the relationship between social and economic factors and student accomplishment. These graphical representations are integrated with the dataset's assembly by eminent authors Valentim Realinho, Jorge Machado, Luis Baptista, and Monica V. Martins. Also, our users have the option of focusing on particular elements that affect students' academic progress by using toggles and filters."),
                tags$h1("What is our data?", gistyle = "font-size: 2em; margin-top: 20px;"),
                tags$p("The data set we chose to work with was a data set predicting students’ dropping out, and their academic success. This data was collected by four authors, Valentim Realinho, Jorge Machado, Luis Baptista, and Monica V. Martins. We accessed this data through the website Kaggle. For undergraduate students in a variety of fields, this dataset contains information on their socioeconomic status, academic achievement, and demographics. It can be used to examine how various variables may affect academic success and dropout rates. Information such as the application method, course preference, grades, and economic indicators like the unemployment and inflation rates are all included. This dataset, which may be used across disciplines, offers insightful information about the factors that influence students' decision to continue their education or leave it early."),
@@ -62,19 +64,24 @@ ui <- fluidPage(
                )
       ),
       
-      # Grade change over time page
-      tabPanel("Grade Changes Over Time", 
+      tabPanel("Grade Changes by Nationality", 
+               h1("Does Nationality influence the academic success?"),
+               p("0 = Domestic Students | 1 = International Students"),
                sidebarLayout(
                  sidebarPanel(
-                   
+                   selectInput(
+                     inputId = "International", label = "International or Not:",
+                     choices = c("0", "1"),
+                     selected = c("0", "1"),
+                   )
                  ),
                  mainPanel(
-                   
-                  
+                   dataTableOutput("chart"),
                  )
-               )
+               ),
+               h2("From this data, we can notice that domestic students have higher grade on both semester 1 and 2.")
       ),
-      # Economic Factors and Education Page
+      
       tabPanel("Economic Factors and Education", 
                h1("Do economic factors, such as unemployment, inflation, and GDP, of where students live in, affect their dropout, enrollment or graduation?"),
                sidebarLayout(
@@ -95,15 +102,12 @@ ui <- fluidPage(
                h2("Therefore, unemployment rate, inflation rate and GDP have no clear relationship to the academic success of students,
                 as the correlations are all close to 0.")
       ),
-      #Conclusion Page
+      
       tabPanel("Conclusion",
                tags$h1("Takeaways", style = "font-size: 2em; margin-top: 20px;"),
                tags$h1("Our Data Quality", style = "font-size: 2em; margin-top: 20px;"),
-               tags$p("The dataset on factors influencing student retention in higher education that we got from Kaggle has been reviewed, and it looks to be of strong quality. The dataset comprises 61 attributes and 1710 instances, which provides a large quantity of data to work with. The dataset also appears to be well-organized, with all the data required for analysis present. In addition, the data was collected by four seperate authors, reducing the bias of the dataset and improving its credibility."),
-               tags$p("Without performing a detailed analysis, it is difficult to determine the bias in the dataset. It is important to keep in mind that the dataset is restricted to higher education in the United States, which may limit the applicability of the findings to other nations. Moreover, factors/variables affecting student success that are included in the dataset are all categorical, described with the use of numbers, which is difficult to interpret and breakdown the meaning of."),
                tags$h1("Limitations", style = "font-size: 2em; margin-top: 20px;"),
                tags$h1("Future Ideas", style = "font-size: 2em; margin-top: 20px;"),
-               tags$p("With this project, we wanted to target stakeholders, such as academics, educators, managers, and policymakers in the area of higher education. We want to make it clear that certain social and economic factors improve academic success while other factors may decline academic success. With the takeaways from the this analysis, we want look at ways to improve student perfromance in various academic fields. By identifying the factors that improve academic success, in the future our users can work to enhance these factors in students to improve their academic success rate."),
       ),
     )
   )
@@ -173,6 +177,19 @@ server <- function(input, output) {
   output$scatter_plot <- renderPlot({
     scatter_data()
   })
+  
+  table_data <- reactive({
+    data2 %>%
+      filter(International == input$International) %>%
+      mutate(across(c(Curricular.units.1st.sem..grade., Curricular.units.2nd.sem..grade.), ~round(., digits = 2))) %>%
+      arrange(desc(Curricular.units.1st.sem..grade.), desc(Curricular.units.2nd.sem..grade.)) %>%
+      select(Curricular.units.1st.sem..grade., Curricular.units.2nd.sem..grade.)
+  })
+  
+  output$chart <- renderDataTable({
+    table_data() %>%
+      setNames(c("First Semester Grade", "Second Semester Grade"))
+  })
+  
 }
-
 shinyApp(ui = ui, server = server)
